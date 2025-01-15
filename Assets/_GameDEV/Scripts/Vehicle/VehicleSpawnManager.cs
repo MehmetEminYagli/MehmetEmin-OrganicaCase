@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class VehicleSpawnManager : MonoBehaviour
 {
@@ -10,6 +11,18 @@ public class VehicleSpawnManager : MonoBehaviour
         public Transform spawnTransform;
         public bool isOccupied;
         public BoxCollider triggerArea;
+        private Vehicle currentVehicle;
+
+        public Vehicle GetVehicleAtPoint()
+        {
+            return currentVehicle;
+        }
+
+        public void SetVehicle(Vehicle vehicle)
+        {
+            currentVehicle = vehicle;
+            isOccupied = vehicle != null;
+        }
     }
 
     [SerializeField] private List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
@@ -56,6 +69,11 @@ public class VehicleSpawnManager : MonoBehaviour
         return null;
     }
 
+    public List<SpawnPoint> GetOccupiedSpawnPoints()
+    {
+        return spawnPoints.Where(p => p.isOccupied && p.GetVehicleAtPoint() != null).ToList();
+    }
+
     private bool IsSpawnPointBlocked(SpawnPoint point)
     {
         if (point.triggerArea == null) return false;
@@ -69,31 +87,35 @@ public class VehicleSpawnManager : MonoBehaviour
 
         foreach (var collider in colliders)
         {
-            if (collider.GetComponent<Vehicle>() != null)
+            var vehicle = collider.GetComponent<Vehicle>();
+            if (vehicle != null)
             {
+                point.SetVehicle(vehicle);
                 return true;
             }
         }
 
+        point.SetVehicle(null);
         return false;
     }
 
-    public void SetSpawnPointOccupied(Transform spawnPoint, bool occupied)
+    public void SetSpawnPointOccupied(Transform spawnPoint, bool occupied, Vehicle vehicle = null)
     {
         if (spawnPointLookup.TryGetValue(spawnPoint, out SpawnPoint point))
         {
             point.isOccupied = occupied;
+            point.SetVehicle(vehicle);
         }
     }
 
-    public void OnVehicleEnterSpawnArea(Transform spawnPoint)
+    public void OnVehicleEnterSpawnArea(Transform spawnPoint, Vehicle vehicle)
     {
-        SetSpawnPointOccupied(spawnPoint, true);
+        SetSpawnPointOccupied(spawnPoint, true, vehicle);
     }
 
     public void OnVehicleExitSpawnArea(Transform spawnPoint)
     {
-        SetSpawnPointOccupied(spawnPoint, false);
+        SetSpawnPointOccupied(spawnPoint, false, null);
     }
 
     private void OnDrawGizmos()

@@ -13,9 +13,10 @@ public class SpawnPointDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Vehicle>() != null)
+        var vehicle = other.GetComponent<Vehicle>();
+        if (vehicle != null)
         {
-            spawnManager.OnVehicleEnterSpawnArea(spawnPoint);
+            spawnManager.OnVehicleEnterSpawnArea(spawnPoint, vehicle);
         }
     }
 
