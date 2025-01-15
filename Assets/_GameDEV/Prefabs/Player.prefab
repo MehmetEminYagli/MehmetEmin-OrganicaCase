@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3983491083186275755}
   - component: {fileID: 1054798139660103271}
   - component: {fileID: 6709307915479944662}
+  - component: {fileID: 3009327567459399981}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -152,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rotationSpeed: 10
+  movementSmoothness: 0.1
   interactionDetector: {fileID: 6709307915479944662}
 --- !u!114 &6709307915479944662
 MonoBehaviour:
@@ -170,6 +172,19 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &3009327567459399981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311039177940485676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e890e03ef5c1ddc499c6c8c6afc1cf56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vehicleInventoryUI: {fileID: 0}
 --- !u!1 &8440442166256237512
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +197,7 @@ GameObject:
   - component: {fileID: 3600665319987818436}
   - component: {fileID: 3696768742912948797}
   - component: {fileID: 3030758815051148959}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}

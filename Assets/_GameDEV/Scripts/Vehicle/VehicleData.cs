@@ -1,20 +1,19 @@
 using UnityEngine;
 
-[System.Serializable]
-public class VehicleData
+[CreateAssetMenu(fileName = "New Vehicle", menuName = "Vehicle/Vehicle Data")]
+public class VehicleData : ScriptableObject
 {
+    [Header("Vehicle Information")]
     public string ModelName;
+    public float Price;
     public float Condition;
     public float TopSpeed;
-    public float Price;
-    public GameObject VehiclePrefab;
+    
+    [Header("Vehicle Stats")]
+    public float acceleration;
+    public float handling;
+    public float braking;
 
-    public VehicleData(string modelName, float condition, float topSpeed, float price, GameObject vehiclePrefab)
-    {
-        ModelName = modelName;
-        Condition = condition;
-        TopSpeed = topSpeed;
-        Price = price;
-        VehiclePrefab = vehiclePrefab;
-    }
+    [TextArea(3, 5)]
+    public string Description;
 } 
